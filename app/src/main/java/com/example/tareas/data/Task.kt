@@ -1,9 +1,9 @@
 package com.example.tareas.data
 
 data class Task (
-            val id: Int,
-            val title: String,
-            val done: Boolean
+    val id: Int,
+    var title: String,
+    var done: Boolean = false
 ) {
 
     
@@ -19,10 +19,10 @@ data class Task (
 
 
         const val SQL_CREATE_TABLE =
-            "CREATE TABLE $TABLE_NAME   (" +
-                    "$COLUMN_NAME_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "$COLUMN_NAME_TITLE} TEXT," +
-                    "$COLUMN_NAME_DONE} BOOLEAN)"
+            "CREATE TABLE $TABLE_NAME (" +
+                    "$COLUMN_NAME_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "$COLUMN_NAME_TITLE TEXT," +
+                    "$COLUMN_NAME_DONE BOOLEAN)"
 
         const val SQL_DROP_TABLE = "DROP TABLE IF EXISTS ${Task.TABLE_NAME}"
     }

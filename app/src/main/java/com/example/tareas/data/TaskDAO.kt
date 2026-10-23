@@ -30,7 +30,7 @@ class TaskDAO(val context: Context) {
     }
     fun cursorToEntity(cursor: Cursor): Task {
         val id = cursor.getInt(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_ID))
-        val title = cursor.getString(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_ID))
+        val title = cursor.getString(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_TITLE))
         val done = cursor.getInt(cursor.getColumnIndexOrThrow(Task.COLUMN_NAME_DONE)) != 0
         return Task(id, title, done)
 
