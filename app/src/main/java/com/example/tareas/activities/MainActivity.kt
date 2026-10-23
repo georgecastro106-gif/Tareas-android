@@ -6,7 +6,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tareas.R
+import com.example.tareas.adapters.TaskAdapter
 import com.example.tareas.data.Task
 import com.example.tareas.data.TaskDAO
 import com.example.tareas.databinding.ActivityMainBinding
@@ -14,6 +16,15 @@ import com.example.tareas.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
+
+    lateinit var adapter: TaskAdapter
+
+    lateinit var taskDAO: TaskDAO
+
+
+    var taskList = listOf<Task>()
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +40,41 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        taskDAO = TaskDAO(this)
+
+        taskList = taskDAO.findAll()
+
+        adapter = TaskAdapter(taskList, ::onItemClick, ::onItemCheck, ::onItemEdit, ::onItemDelete)
+
+
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
+
+    }
+
+    fun onItemClick(position: Int) {
+        onItemCheck(position)
+
+    }
+
+    fun onItemCheck(position: Int) {
+        val task = taskList[position]
+        task.done = !task.done
+        taskDAO.update(task)
+
+        // TODO: Se puede optimizar
+        taskList = taskDAO.findAll()
+        adapter.updateData(taskList)
+
+    }
+
+    fun onItemEdit(position: Int) {
+
+    }
+
+    fun onItemDelete(position: Int) {
 
     }
 }
